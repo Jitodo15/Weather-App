@@ -3,81 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <link rel="stylesheet" href="/styles/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>My Weather App</title>
+    <link href="/styles/style.css" rel="stylesheet">
+    
 </head>
 <body>
 
     <div class="container">
-        <form action="/" id="form" class="form" method="POST">
-            <select name="type" class="form-select">
-              
-              <option value="city-name">City Name</option>
-              <!-- <option value="state-code">State Code</option>
-              <option value="country-code">Country COde</option> -->
-              
-            </select>
-            <input type="text" id="city" name="city" autocomplete="off">
-            <input id="delete" type="submit" value="OK" formaction="/submit">
-          </form>
-          <section id="cards" class="cards">
-
-           
-            <% if (locals.content) { %>
-             
-                <article class="card-item">
-                    <div class="card-info">
-                        <span class="card-type">
-                          <!-- Show Activity type -->
-                          It is <%= content.main.temp %> degrees in <%= content.name %>. 
-                          
-                        </span>
-                        
-                    </div>
-                    
-
-                </article>
-            <% } else if (locals.error) { %>
-                <article class="card-item">
-                <div id="tag-error" class="tag-error">
-                    <div class="card-info">
-                        <span class="card-type">
-                          <!-- Show Activity type -->
-                          <%= error %>
-                          
-                        </span>
-                        
-                    </div>
-                    
-                </div>
-            </article>
-                <%} else { %>
-                    <article class="card-item">
-                        <div id="tag-error" class="tag-error">
-                            <div class="card-info">
-                                <span class="card-type">
-                                  <!-- Show Activity type -->
-                                  Waiting for data.....
-                                  
-                                </span>
-                                
-                            </div>
-                            
-                        </div>
-                    </article>
-                    
-                   <%} %>
-              
-             
-      
-                
-             
-            
-      
-          </section>
+        <form class="search" action="/" method="post">
+            <input type="text" required name="city" placeholder="Enter your city" autocomplete="off">
+            <button action="submit" formaction="/submit">Go!</button>
+        </form>
+        
     </div>
+
+    <% if (locals.content) { %>
+        <div class="item">
+            <div class="card">
+               <div class="city">
+                   <h6><%= content.name %></h6>
+                   <h6><%= new Date().getTime() %></h6>
+               </div>
+                   
+               <div class="weather">
+                   <h1 class="degrees"> <%= content.main.temp %>&deg; F</h1>
+                   <span class="temp"><%= content.weather[0].description %></span>
+               </div>
+       
+               <div class="feel">
+                   <div class="">
+                       <p class="wind">
+                           <img src="https://i.imgur.com/B9kqOzp.png" height="17px" >
+       
+                          <span> <%= content.wind.speed%>mph  </span>
+                       </p>
+       
+                       <p class="humidity"> 
+                           <img src="images/humidity.png" height="17px" >
+                          <span><%=content.main.humidity%>% </span> 
+                       </p>
+       
+                   
+                   </div>
+       
+            
+       
+               </div>
+       
+            </div>
+           </div>
+     
+    <% } else if(locals.error){ %>
+        <h1 class="waiting">City not found. Try again and check spelling.</h1>
+
+    <%} else{ %>
+       <h1 class="waiting">Waiting for city name.....</h1>
+    <%}%>
+
+    <footer>
+        <p>Copyright© 2024 Joy Itodo</p>
+
+    </footer>
+
+
+    
     
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>
